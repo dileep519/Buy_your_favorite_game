@@ -29,7 +29,8 @@ class App extends Component {
         filteractive:"",
         display:true,
         buy:false,
-        itemtobuy:""
+        itemtobuy:"",
+        from:""
      }
     onLoginclicked=()=>{
         this.setState({log:true});
@@ -78,9 +79,9 @@ class App extends Component {
         }else{
             if(event.data.data.length===0){
                 swal({
-                    title:"Result found 0",
-                    text:"Search text does not found",
-                    icon:"error",
+                    title:"No results found",
+                    text:"Try different keywords",
+                    icon:"warning",
                     dangerMode:true
                 })
             }else{
@@ -97,7 +98,7 @@ class App extends Component {
                         filters=event.data.filters;
                         display=true;
                     }
-                    this.setState({data:event.data.data,page:event.data.page,total:event.data.total_pages,total_rec:event.data.total_rec,search:event.data.search,cart_count:res.data.count,sort:"",filters,display,buy:false});
+                    this.setState({data:event.data.data,page:event.data.page,total:event.data.total_pages,total_rec:event.data.total_rec,search:event.data.search,cart_count:res.data.count,sort:"",filters,display,buy:false,from:'Search'});
                 }).catch((err)=>{
                     console.log(err);
                 })
@@ -126,7 +127,7 @@ class App extends Component {
                         token:this.state.token
                     }
                 }).then((res)=>{
-                    this.setState({data:event.data.data,page:event.data.page,total:event.data.total_pages,total_rec:event.data.total_rec,search:event.data.search,cart_count:res.data.count,sort:"",filters:[],filteractive:"",display:false,buy:false});
+                    this.setState({data:event.data.data,page:event.data.page,total:event.data.total_pages,total_rec:event.data.total_rec,search:event.data.search,cart_count:res.data.count,sort:"",filters:[],filteractive:"",display:false,buy:false,from:"Home"});
                 }).catch((err)=>{
                     console.log(err);
                 })
@@ -138,7 +139,7 @@ class App extends Component {
     }
     onCartItemsReceived=(event)=>{
         this.setState({data:event.data.data,page:event.data.page,total:event.data.total_pages,
-        total_rec:event.data.total_rec,search:event.data.search,sort:"",filters:[],filteractive:"",display:false,buy:false});
+        total_rec:event.data.total_rec,search:event.data.search,sort:"",filters:[],filteractive:"",display:false,buy:false,from:"Cart"});
     }
     onSetValue=(sort)=>{
         this.setState({sort});
@@ -173,7 +174,7 @@ class App extends Component {
                         }
                     }
                     if(flag===1){
-                        this.setState({data:event.data.data,page:event.data.page,total:event.data.total_pages,total_rec:event.data.total_rec,search:event.data.search,sort:this.state.sort,cart_count:res.data.count,filters:event.data.filters,filteractive:this.state.filteractive,display:true,buy:false});
+                        this.setState({data:event.data.data,page:event.data.page,total:event.data.total_pages,total_rec:event.data.total_rec,search:event.data.search,sort:this.state.sort,cart_count:res.data.count,filters:event.data.filters,filteractive:this.state.filteractive,display:true,buy:false,from:"Sort"});
                     }
                 }).catch((err)=>{
                     console.log(err);
@@ -182,7 +183,7 @@ class App extends Component {
         }
     }
     onLoggedout=()=>{
-        this.setState({log:true,data:[],token:"",total:"",total_rec:"",total_pages:"",page:1,cart_count:"",search:"",sort:"",filters:[],filteractive:"",display:false,buy:false});
+        this.setState({log:true,data:[],token:"",total:"",total_rec:"",total_pages:"",page:1,cart_count:"",search:"",sort:"",filters:[],filteractive:"",display:false,buy:false,from:""});
     }
     onFilterValue=(value)=>{
         this.setState({filteractive:value});
@@ -195,9 +196,10 @@ class App extends Component {
     }
     onbuyreset=(event)=>{
         if(this.state.display===false){
-            this.setState({buy:false,itemtobuy:[],cart_count:event.cart_count,data:event.data})
+            this.setState({buy:false,itemtobuy:[],cart_count:event.cart_count,data:this.state.data,display:false})
         }else{
-            this.setState({buy:false,itemtobuy:[],cart_count:event.cart_count,display:true})
+            
+            this.setState({buy:false,itemtobuy:[],cart_count:event.cart_count,data:event.data.data,display:false})
         }
     }
     onOrderData=(event)=>{

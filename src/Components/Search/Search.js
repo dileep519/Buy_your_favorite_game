@@ -65,7 +65,7 @@ class Search extends Component {
         return ( 
             <div className="search-div">
                 <input onKeyPress={this.onEnterPressed} onChange={this.onSearchChanged}  className="search-text" type="text" placeholder="Search" value={this.state.value}/>
-                <button  className="submit-but" onClick={this.onSearchClicked} type="button">Serach</button>
+                <button  className="submit-but" onClick={this.onSearchClicked} type="button">Search</button>
             </div>
          );
     }
