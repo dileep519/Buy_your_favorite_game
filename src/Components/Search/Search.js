@@ -76,8 +76,4 @@ export default Search;
 
 
 
-// git init
-// git add README.md
-// git commit -m "first commit"
-// git remote add origin https://github.com/dileep519/Buy_your_favorite_game.git
-// git push -u origin master
+
